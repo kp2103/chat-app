@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+
+		<title>Chat App</title>
+
+		<link
+			rel="preconnect"
+			href="https://fonts.googleapis.com" />
+		<link
+			rel="preconnect"
+			href="https://fonts.gstatic.com"
+			crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+			rel="stylesheet" />
+
+		<link
+			rel="stylesheet"
+			href="../src/css/style.css" />
+	</head>
+	<body>
+		<div class="app">
+			<nav
+				class="nav-rail"
+				role="navigation"
+				aria-label="App navigation">
+				<a
+					class="nav-rail__logo"
+					href="#"
+					aria-label="Chat App">
+					<svg class="icon--large">
+						<use
+							href="../src/assets/icons/ui_icons_sprite.svg#chat"></use>
+					</svg>
+				</a>
+
+				<button
+					class="nav-item nav-item--active"
+					id="nav-chats"
+					aria-label="Chats">
+					<svg class="icon--medium">
+						<use
+							href="../src/assets/icons/ui_icons_sprite.svg#chat"></use>
+					</svg>
+
+					<span
+						class="nav-item__badge nav-item__badge--count"
+						aria-label="3 unread"
+						>3</span
+					>
+				</button>
+
+				<button
+					class="nav-item"
+					id="nav-bookmarks"
+					aria-label="Bookmarks">
+					<svg class="icon--medium">
+						<use
+							href="../src/assets/icons/ui_icons_sprite.svg#bookmark"></use>
+					</svg>
+				</button>
+
+				<button
+					class="nav-item"
+					id="nav-call"
+					aria-label="Call">
+					<svg class="icon--medium">
+						<use
+							href="../src/assets/icons/ui_icons_sprite.svg#call"></use>
+					</svg>
+				</button>
+
+				<button
+					class="nav-item"
+					id="nav-video"
+					aria-label="Video">
+					<svg class="icon--medium">
+						<use
+							href="../src/assets/icons/ui_icons_sprite.svg#video-call"></use>
+					</svg>
+				</button>
+
+				<div class="nav-rail__spacer"></div>
+
+				<button
+					class="nav-item"
+					id="nav-settings"
+					aria-label="Settings">
+					<svg class="icon--medium">
+						<use
+							href="../src/assets/icons/ui_icons_sprite.svg#settings"></use>
+					</svg>
+				</button>
+
+				<div
+					class="nav-rail__user"
+					role="button"
+					tabindex="0"
+					aria-label="Your profile">
+					<img
+						src="https://i.pravatar.cc/40?img=12"
+						alt="Jontray Arnold" />
+				</div>
+			</nav>
+
+			<div class="chat-layout">
+				<aside
+					class="sidebar"
+					aria-label="Conversations">
+					<div class="sidebar__header">
+						<h1 class="sidebar__title">Chat</h1>
+
+						<button
+							class="icon-btn icon-btn--sm"
+							id="btn-sidebar-settings"
+							aria-label="Sidebar settings">
+							<svg class="icon--small">
+								<use
+									href="../src/assets/icons/ui_icons_sprite.svg#settings"></use>
+							</svg>
+						</button>
+					</div>
+
+					<div
+						class="own-profile"
+						role="region"
+						aria-label="Your profile">
+						<div class="av-wrap av-wrap--xl">
+							<div class="avatar avatar--xl">
+								<img
+									src="https://i.pravatar.cc/80?img=12"
+									alt="Jontray Arnold" />
+							</div>
+
+							<span
+								class="status-dot status-dot--online"
+								aria-label="Online"></span>
+						</div>
+						<div class="own-profile__name">Jontray Arnold</div>
+
+						<button
+							class="status-pill status-pill--online"
+							id="btn-status"
+							aria-label="Status: available">
+							<svg
+								width="7"
+								height="7"
+								viewBox="0 0 8 8"
+								fill="currentColor">
+								<circle
+									cx="4"
+									cy="4"
+									r="4" />
+							</svg>
+
+							<span id="status-text">Available</span>
+
+							<svg class="icon--small">
+								<use
+									href="../src/assets/icons/ui_icons_sprite.svg#chevron-down"></use>
+							</svg>
+						</button>
+					</div>
+
+					<div class="search-bar">
+						<input
+							type="search"
+							id="chat-search"
+							class="search-bar__input"
+							placeholder="Search"
+							aria-label="Search conversations"
+							autocomplete="off" />
+
+						<span
+							class="search-bar__icon"
+							aria-hidden="true">
+							<svg class="icon--small">
+								<use
+									href="../src/assets/icons/ui_icons_sprite.svg#search"></use>
+							</svg>
+						</span>
+					</div>
+
+					<div class="conv-section">
+						<div class="conv-section__header">
+							<span class="conv-section__label">Last chats</span>
+
+							<div class="conv-section__actions">
+								<button
+									class="icon-btn icon-btn--sm"
+									id="btn-new-chat"
+									aria-label="New conversation">
+									<svg class="icon--small">
+										<use
+											href="../src/assets/icons/ui_icons_sprite.svg#plus"></use>
+									</svg>
+								</button>
+
+								<button
+									class="icon-btn icon-btn--sm"
+									id="btn-list-more"
+									aria-label="More options">
+									<svg class="icon--small">
+										<use
+											href="../src/assets/icons/ui_icons_sprite.svg#ellipsis-vertical"></use>
+									</svg>
+								</button>
+							</div>
+						</div>
+
+						<ul
+							class="conv-section__list"
+							id="conv-list"
+							role="listbox"
+							aria-label="Conversations">
+							<li
+								class="conv-item conv-item--selected"
+								role="option"
+								tabindex="0">
+								<div class="conv-item__avatar">
+									<div
+										class="avatar avatar--md avatar--square av-group"
+										aria-hidden="true">
+										<svg
+											width="18"
+											height="18"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="white"
+											stroke-width="1.6"
+											stroke-linecap="round"
+											stroke-linejoin="round">
+											<rect
+												x="1"
+												y="10"
+												width="4"
+												height="11" />
+											<rect
+												x="6"
+												y="6"
+												width="4"
+												height="15" />
+											<rect
+												x="11"
+												y="8"
+												width="4"
+												height="13" />
+											<rect
+												x="16"
+												y="3"
+												width="4"
+												height="18" />
+											<path d="M1 21h22" />
+										</svg>
+									</div>
+								</div>
+
+								<div class="conv-item__body">
+									<div class="conv-item__row">
+										<span class="conv-item__name">
+											Real estate deals
+										</span>
+										<span class="conv-item__time">11:15</span>
+									</div>
+
+									<div
+										class="conv-item__preview conv-item__preview--typing">
+										typing...
+									</div>
+								</div>
+							</li>
+
+							<li
+								class="conv-item"
+								role="option"
+								tabindex="0">
+								<div class="conv-item__avatar">
+									<div class="av-wrap av-wrap--md">
+										<div class="avatar avatar--md">
+											<img
+												src="https://i.pravatar.cc/40?img=47"
+												alt="Kate Johnson" />
+										</div>
+										<span
+											class="status-dot status-dot--online"></span>
+									</div>
+								</div>
+
+								<div class="conv-item__body">
+									<div class="conv-item__row">
+										<span class="conv-item__name"
+											>Kate Johnson</span
+										><span class="conv-item__time">11:15</span>
+									</div>
+									<div
+										class="conv-item__preview"
+										id="preview-kate">
+										I will send the document s...
+									</div>
+								</div>
+								<div class="conv-item__trailing">
+									<span
+										class="badge badge--md badge--brand"
+										aria-label="2 unread"
+										>2</span
+									>
+								</div>
+							</li>
+
+							<li
+								class="conv-item"
+								role="option"
+								tabindex="0">
+								<div class="conv-item__avatar">
+									<div class="av-wrap av-wrap--md">
+										<div class="avatar avatar--md av-violet">
+											TS
+										</div>
+										<span
+											class="status-dot status-dot--away"></span>
+									</div>
+								</div>
+								<div class="conv-item__body">
+									<div class="conv-item__row">
+										<span class="conv-item__name"
+											>Tamara Shevchenko</span
+										><span class="conv-item__time">10:05</span>
+									</div>
+									<div
+										class="conv-item__preview"
+										id="preview-tamara">
+										are you going to a busine...
+									</div>
+								</div>
+							</li>
+
+							<li
+								class="conv-item conv-item--unread"
+								role="option"
+								tabindex="0">
+								<div class="conv-item__avatar">
+									<div class="av-wrap av-wrap--md">
+										<div class="avatar avatar--md">
+											<img
+												src="https://i.pravatar.cc/40?img=53"
+												alt="Joshua Clarkson" />
+										</div>
+										<span
+											class="status-dot status-dot--online"></span>
+									</div>
+								</div>
+								<div class="conv-item__body">
+									<div class="conv-item__row">
+										<span class="conv-item__name"
+											>Joshua Clarkson</span
+										><span class="conv-item__time">15.09</span>
+									</div>
+									<div
+										class="conv-item__preview"
+										id="preview-joshua">
+										I suggest to start, I have n...
+									</div>
+								</div>
+							</li>
+
+							<li
+								class="conv-item conv-item--archived"
+								role="option"
+								tabindex="0">
+								<div class="conv-item__avatar">
+									<div class="av-wrap av-wrap--md">
+										<div class="avatar avatar--md">
+											<img
+												src="https://i.pravatar.cc/40?img=60"
+												alt="Jeroen Zoet" />
+										</div>
+										<span
+											class="status-dot status-dot--busy"></span>
+									</div>
+								</div>
+								<div class="conv-item__body">
+									<div class="conv-item__row">
+										<span class="conv-item__name"
+											>Jeroen Zoet</span
+										><span class="conv-item__time">14.09</span>
+									</div>
+									<div
+										class="conv-item__preview"
+										id="preview-jeroen">
+										We need to start a new re...
+									</div>
+								</div>
+							</li>
+
+							<li
+								class="conv-item conv-item--muted"
+								role="option"
+								tabindex="0">
+								<div class="conv-item__avatar">
+									<div class="avatar avatar--md av-sky">ES</div>
+								</div>
+								<div class="conv-item__body">
+									<div class="conv-item__row">
+										<span class="conv-item__name"
+											>Evan Scott</span
+										><span class="conv-item__time">13.09</span>
+									</div>
+									<div
+										class="conv-item__preview"
+										id="preview-evan">
+										That sounds great, let's...
+									</div>
+								</div>
+								<div class="conv-item__trailing">
+									<svg
+										width="12"
+										height="12"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										style="color: var(--n-300)"
+										aria-label="Muted">
+										<path d="M11 5L6 9H2v6h4l5 4V5z" />
+										<line
+											x1="23"
+											y1="9"
+											x2="17"
+											y2="15" />
+										<line
+											x1="17"
+											y1="9"
+											x2="23"
+											y2="15" />
+									</svg>
+								</div>
+							</li>
+
+							<li
+								class="conv-item"
+								role="option"
+								tabindex="0">
+								<div class="conv-item__avatar">
+									<div class="av-wrap av-wrap--md">
+										<div class="avatar avatar--md av-rose">
+											RK
+										</div>
+										<span
+											class="status-dot status-dot--offline"></span>
+									</div>
+								</div>
+								<div class="conv-item__body">
+									<div class="conv-item__row">
+										<span class="conv-item__name"
+											>Robert Kim</span
+										><span class="conv-item__time">12.09</span>
+									</div>
+									<div
+										class="conv-item__preview conv-item__preview--draft"
+										id="preview-robert">
+										Draft: Don't forget the...
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</aside>
+			</div>
+		</div>
+	</body>
+</html>

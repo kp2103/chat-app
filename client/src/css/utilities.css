@@ -1,0 +1,14 @@
+.icon--small {
+	width: var(--s4);
+	height: var(--s4);
+}
+
+.icon--medium {
+	width: var(--s5);
+	height: var(--s5);
+}
+
+.icon--large {
+	width: var(--s6);
+	height: var(--s6);
+}

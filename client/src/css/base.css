@@ -1,0 +1,49 @@
+/* ─────────────────────────────────────────────────────────────────
+    BASE
+───────────────────────────────────────────────────────────────── */
+html,
+body {
+	height: 100%;
+}
+
+body {
+	height: 100vh;
+	min-height: 100vh;
+	color: var(--n-800);
+	background: var(--n-150);
+	padding: var(--s4);
+	font-family: var(--font);
+	font-size: var(--tx-base);
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Universal focus ring */
+:focus-visible {
+	outline: 2px solid var(--brand-400);
+	outline-offset: 2px;
+	border-radius: var(--r-sm);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+	width: 4px;
+	height: 4px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--n-200);
+	border-radius: var(--r-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--n-300);
+}

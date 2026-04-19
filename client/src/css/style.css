@@ -1,0 +1,26 @@
+/* 1. Design System */
+@import 'tokens.css';
+
+/* 2. Reset & Base */
+@import 'reset.css';
+@import 'base.css';
+
+/* 3. Structural Layout */
+@import 'layout.css';
+
+/* 4. UI Components */
+@import 'components/avatar.css';
+@import 'components/badge.css';
+@import 'components/buttons.css';
+@import 'components/inputs.css';
+@import 'components/tabs.css';
+
+/* 5. Modules/Sections */
+@import 'sections/navrail.css';
+@import 'sections/sidebar.css';
+@import 'sections/chat-area.css';
+@import 'sections/panels.css';
+
+/* 6. Overlays & Utils */
+@import 'overlays.css';
+@import 'utilities.css';
