@@ -15,10 +15,10 @@ export function initSocket(httpServer)
         })
         
         //listen for send-message
-        socket.on('send-message',({message,roomId})=>{
+        socket.on('send-message',({message,roomId,senderMobileNumber})=>{
             socket.to(roomId).emit('receive-message',message)
 
-            //
+            //save message 
         })
     })
 }
