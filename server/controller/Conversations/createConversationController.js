@@ -35,12 +35,6 @@ export async function createConversation(req, res) {
                 });
             }
 
-            if (participants.length < 3) {
-                return res.status(400).json({
-                    message: "Group must have atleast 3 participants",
-                    isSuccess: false
-                });
-            }
         } 
         else {
             return res.status(400).json({
@@ -49,15 +43,30 @@ export async function createConversation(req, res) {
             });
         }
 
-        const usersId = await UserModel.find({
+        const usersDocs = await UserModel.find({
             mobileNumber : { $in : participants}
+        }).select("_id")
+
+        const usersId = usersDocs.map((user)=> user._id)
+
+        // check for already exist conversation
+        const isAlreadyConversationHappen = await ConversationModel.findOne({
+            participants : {$all : usersId}
         })
+
+        if(isAlreadyConversationHappen)
+        {
+            return res.status().json({
+                message: "Conversation has Already been created",
+                isSuccess:false,
+            })
+        }
 
         const conversation = await ConversationModel.create({
             type,
             participants : usersId,
             name: type === 'Group' ? name : null
-        });
+        }).select("type name conversationId");
 
         return res.status(201).json({
             message: "Conversation created",
