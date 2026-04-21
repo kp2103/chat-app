@@ -1,7 +1,15 @@
-import ConversationModel from "../../model/Conversation.model.js";
-import UserModel from "../../model/User.model.js";
+import type {Request,Response} from 'express'
+import ConversationModel from "../../model/Conversation.model.ts";
+import UserModel from "../../model/User.model.ts";
 
-export async function createConversation(req, res) {
+interface CreateConversationBody{
+    type:"Direct"|"Group",
+    participants:string[]
+    name:string|null,
+
+}
+
+export async function createConversation(req:Request<{},{},CreateConversationBody>, res:Response) {
     try {
         const { type, participants, name } = req.body;
 
@@ -56,7 +64,7 @@ export async function createConversation(req, res) {
 
         if(isAlreadyConversationHappen)
         {
-            return res.status().json({
+            return res.status(400).json({
                 message: "Conversation has Already been created",
                 isSuccess:false,
             })
@@ -66,12 +74,12 @@ export async function createConversation(req, res) {
             type,
             participants : usersId,
             name: type === 'Group' ? name : null
-        }).select("type name conversationId");
+        })
 
         return res.status(201).json({
             message: "Conversation created",
             isSuccess: true,
-            conversation
+            conversationId:conversation.conversationId
         });
 
     } catch (error) {

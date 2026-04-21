@@ -1,6 +1,14 @@
-import MessageModel from "../../model/Message.model.js";
+import type {Request,Response} from 'express'
+import MessageModel from "../../model/Message.model.ts";
 
-export async function createMessageController(req,res)
+interface CreateMessageBody {
+    conversationId: string;
+    message: string;
+    senderMobileNumber: string;
+    type: "Text" | "Image" | "Document";
+}
+
+export async function createMessageController(req:Request<{},{},CreateMessageBody>,res:Response)
 {
     try {
         const {conversationId,message,senderMobileNumber,type} = req.body
@@ -12,14 +20,20 @@ export async function createMessageController(req,res)
                 isSuccess:false
             })
         }
-        if(!/^[6-9]\d{9}/.test(senderMobileNumber))
+        if(!/^[6-9]\d{9}$/.test(senderMobileNumber))
         {
             return res.status(400).json({
                 message: "Sender Mobile number must start with 6-9 and must have exact 10 digit",
                 isSuccess:false
             })
         }
-        
+        //  // ✅ fixed regex
+        // if (!/^[6-9]\d{9}$/.test(senderMobileNumber)) {
+        //     return res.status(400).json({
+        //         message: "Sender Mobile number must start with 6-9 and must have exactly 10 digits",
+        //         isSuccess: false,
+        //     });
+        // }
         const messageDoc = await MessageModel.create({
             conversationId,
             type,
@@ -42,27 +56,34 @@ export async function createMessageController(req,res)
     } catch (error) {
         console.log("Error in create Message Controller:",error)
 
-        if(error.name === 'ValidationError')
+        if(error instanceof Error && error.name === 'ValidationError')
         {
             return res.status(400).json({
                 message: error.message,
                 isSuccess:false,
             })
         }
-        if(error.name === 'CastError')
+        if(error instanceof Error && error.name === 'CastError')
         {
             return res.status(400).json({
                 message:error.message,
                 isSuccess:false,
             })
         }
-        if(error.code === 11000)
+        
+        if (
+            typeof error === "object" &&
+            error !== null &&
+            "code" in error &&
+            (error as { code?: number }).code === 11000
+        ) 
         {
             return res.status(409).json({
-                message: error.message,
-                isSuccess:false,
-            })
+                message: "Duplicate key error",
+                isSuccess: false,
+            });
         }
+
         return res.status(500).json({
             message:"Internal Server Error",
             isSuccess:false

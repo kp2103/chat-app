@@ -1,6 +1,6 @@
 import express, { Router } from 'express'
-import {fetchUserController} from '../controller/Users/fetchUserController.js'
-import {createUserController} from '../controller/Users/createUserController.js'
+import {fetchUserController} from '../controller/Users/fetchUserController.ts'
+import {createUserController} from '../controller/Users/createUserController.ts'
 
 const userRoute = Router()
 

@@ -1,9 +1,14 @@
-import UserModel from "../../model/User.model.js";
+import type {Request,Response} from 'express'
+import UserModel from '../../model/User.model.ts'
 
-export async function fetchUserController(req,res) {
+interface FetchUserParams {
+    mobileNumber:string
+}
+
+export async function fetchUserController(req:Request<FetchUserParams>,res:Response) {
     try {
 
-        const mobileNumber = req.params.mobileNumber
+        const {mobileNumber} = req.params
 
         if(!mobileNumber)
         {
