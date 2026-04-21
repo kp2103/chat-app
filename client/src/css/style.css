@@ -10,10 +10,8 @@
 
 /* 4. UI Components */
 @import 'components/avatar.css';
-@import 'components/badge.css';
 @import 'components/buttons.css';
 @import 'components/inputs.css';
-@import 'components/tabs.css';
 
 /* 5. Modules/Sections */
 @import 'sections/navrail.css';
@@ -22,5 +20,4 @@
 @import 'sections/panels.css';
 
 /* 6. Overlays & Utils */
-@import 'overlays.css';
 @import 'utilities.css';

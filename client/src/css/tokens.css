@@ -40,14 +40,6 @@
 	--s-busy: var(--c-danger);
 	--s-offline: var(--n-300);
 
-	/* Bubbles */
-	--bubble-out-bg: var(--brand-500);
-	--bubble-out-fg: #fff;
-	--bubble-out-shadow: 0 2px 10px rgba(11, 188, 166, 0.26);
-	--bubble-in-bg: var(--n-0);
-	--bubble-in-fg: var(--n-800);
-	--bubble-in-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
-
 	/* Surfaces */
 	--sf-app: var(--n-50);
 	--sf-panel: var(--n-0);
@@ -99,24 +91,6 @@
 	--s8: 2.5rem; /* 40px */
 	--s9: 3rem; /* 48px */
 	--s10: 4rem; /* 64px */
-
-	/* Avatar Sizes */
-	--sz-avatar-2xs: 1.25rem; /* 20px */
-	--sz-avatar-xs: 1.5rem; /* 24px */
-	--sz-avatar-sm: 2rem; /* 32px */
-	--sz-avatar-md: 2.5rem; /* 40px */
-	--sz-avatar-lg: 3.25rem; /* 52px */
-	--sz-avatar-xl: 4rem; /* 64px */
-	--sz-avatar-2xl: 5rem; /* 80px */
-
-	/* Avatar Font Sizes */
-	--f-avatar-2xs: 0.4375rem; /* 7px */
-	--f-avatar-xs: 0.5625rem; /* 9px */
-	--f-avatar-sm: 0.6875rem; /* 11px */
-	--f-avatar-md: 0.8125rem; /* 13px */
-	--f-avatar-lg: 1rem; /* 16px */
-	--f-avatar-xl: 1.25rem; /* 20px */
-	--f-avatar-2xl: 1.5rem; /* 24px */
 
 	/* Motion */
 	--ease-snap: 80ms ease;

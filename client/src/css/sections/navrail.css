@@ -24,7 +24,7 @@
 	margin-bottom: var(--s3);
 	padding: var(--s2);
 	color: var(--n-0);
-	background: linear-gradient(135deg, var(--brand-500), var(--brand-700));
+	background: var(--brand-500);
 	border-radius: var(--r-md);
 	box-shadow: 0 4px 12px rgba(11, 188, 166, 0.32);
 
@@ -103,11 +103,7 @@
 
 .nav-item__badge {
 	position: absolute;
-	top: 6px;
-	right: 6px;
 
-	width: var(--s2);
-	height: var(--s2);
 	background: var(--c-danger);
 	border: 2px solid var(--sf-panel);
 	border-radius: var(--r-pill);
