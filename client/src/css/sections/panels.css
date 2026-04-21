@@ -1,0 +1,9 @@
+.panel {
+	background: var(--sf-panel);
+	border-left: 1px solid var(--bd-subtle);
+	overflow: hidden;
+
+	display: flex;
+	flex-direction: column;
+	gap: var(--s2);
+}
