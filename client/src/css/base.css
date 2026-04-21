@@ -11,7 +11,6 @@ body {
 	min-height: 100vh;
 	color: var(--n-800);
 	background: var(--n-150);
-	padding: var(--s4);
 	font-family: var(--font);
 	font-size: var(--tx-base);
 	line-height: 1.5;

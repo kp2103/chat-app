@@ -3,11 +3,8 @@
 ───────────────────────────────────────────────────────────────── */
 .app {
 	width: 100%;
-	max-width: 1300px;
 	height: 100%;
 	background: var(--sf-panel);
-	border-radius: var(--r-2xl);
-	box-shadow: var(--sh-xl);
 	overflow: hidden;
 
 	display: flex;
@@ -19,5 +16,5 @@
 	overflow: hidden;
 
 	display: grid;
-	grid-template-columns: 1fr 2fr 1fr;
+	grid-template-columns: 2fr 5fr 2fr;
 }

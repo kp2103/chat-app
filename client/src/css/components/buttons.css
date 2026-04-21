@@ -49,49 +49,6 @@
 	font-size: var(--tx-md);
 }
 
-.btn--primary {
-	background: var(--brand-500);
-	color: #fff;
-	box-shadow: 0 2px 8px rgba(11, 188, 166, 0.28);
-
-	&:hover {
-		background: var(--brand-600);
-	}
-}
-.btn--secondary {
-	background: var(--n-100);
-	color: var(--n-700);
-
-	&:hover {
-		background: var(--n-200);
-	}
-}
-.btn--ghost {
-	background: transparent;
-	color: var(--n-600);
-
-	&:hover {
-		background: var(--n-50);
-	}
-}
-.btn--danger {
-	background: var(--c-danger);
-	color: #fff;
-
-	&:hover {
-		background: #dc2626;
-	}
-}
-.btn--outline {
-	background: transparent;
-	border: 1.5px solid var(--bd-default);
-	color: var(--n-700);
-
-	&:hover {
-		background: var(--n-50);
-	}
-}
-
 .icon-btn {
 	flex-shrink: 0;
 
@@ -121,26 +78,4 @@
 .icon-btn--lg {
 	width: var(--s8);
 	height: var(--s8);
-}
-
-.icon-btn--sq {
-	border-radius: var(--r-sm);
-}
-
-.icon-btn--brand {
-	background: var(--brand-500);
-	color: #fff;
-	box-shadow: 0 2px 8px rgba(11, 188, 166, 0.28);
-
-	&:hover {
-		background: var(--brand-600);
-	}
-}
-.icon-btn--active {
-	background: var(--brand-50);
-	color: var(--brand-600);
-}
-.icon-btn--danger:hover {
-	background: #fee2e2;
-	color: var(--c-danger);
 }

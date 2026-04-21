@@ -86,6 +86,11 @@
 	background: var(--brand-50);
 	color: var(--brand-600);
 
+	&:hover {
+		background: var(--brand-50);
+		color: var(--brand-600);
+	}
+
 	&::before {
 		content: '';
 		position: absolute;
