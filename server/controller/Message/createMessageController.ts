@@ -1,5 +1,4 @@
-import type {Request,Response} from 'express'
-import MessageModel from "../../model/Message.model.ts";
+import type { Request, Response } from 'express';
 import { createMessage } from '../../services/createMessage.service.ts';
 
 interface CreateMessageBody {
@@ -77,13 +76,13 @@ export async function createMessageController(req:Request<{},{},CreateMessageBod
                 isSuccess:false,
             })
         }
-        
+
         if (
             typeof error === "object" &&
             error !== null &&
             "code" in error &&
             (error as { code?: number }).code === 11000
-        ) 
+        )
         {
             return res.status(409).json({
                 message: "Duplicate key error",
