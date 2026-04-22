@@ -1,5 +1,6 @@
 import type {Request,Response} from 'express'
 import MessageModel from "../../model/Message.model.ts";
+import { createMessage } from '../../services/createMessage.service.ts';
 
 interface CreateMessageBody {
     conversationId: string;
@@ -13,44 +14,50 @@ export async function createMessageController(req:Request<{},{},CreateMessageBod
     try {
         const {conversationId,message,senderMobileNumber,type} = req.body
 
-        if(!conversationId || !message || !senderMobileNumber || !type)
-        {
-            return res.status(400).json({
-                message:"ConversationId , message,senderMobileNumber and type is required",
-                isSuccess:false
-            })
-        }
-        if(!/^[6-9]\d{9}$/.test(senderMobileNumber))
-        {
-            return res.status(400).json({
-                message: "Sender Mobile number must start with 6-9 and must have exact 10 digit",
-                isSuccess:false
-            })
-        }
-        //  // ✅ fixed regex
-        // if (!/^[6-9]\d{9}$/.test(senderMobileNumber)) {
+        // if(!conversationId || !message || !senderMobileNumber || !type)
+        // {
         //     return res.status(400).json({
-        //         message: "Sender Mobile number must start with 6-9 and must have exactly 10 digits",
-        //         isSuccess: false,
-        //     });
+        //         message:"ConversationId , message,senderMobileNumber and type is required",
+        //         isSuccess:false
+        //     })
         // }
-        const messageDoc = await MessageModel.create({
-            conversationId,
-            type,
-            senderMobileNumber,
-            content : {
-                text:message
-            }
-        })
+        // if(!/^[6-9]\d{9}$/.test(senderMobileNumber))
+        // {
+        //     return res.status(400).json({
+        //         message: "Sender Mobile number must start with 6-9 and must have exact 10 digit",
+        //         isSuccess:false
+        //     })
+        // }
+        // //  // ✅ fixed regex
+        // // if (!/^[6-9]\d{9}$/.test(senderMobileNumber)) {
+        // //     return res.status(400).json({
+        // //         message: "Sender Mobile number must start with 6-9 and must have exactly 10 digits",
+        // //         isSuccess: false,
+        // //     });
+        // // }
+        // const messageDoc = await MessageModel.create({
+        //     conversationId,
+        //     type,
+        //     senderMobileNumber,
+        //     content : {
+        //         text:message
+        //     }
+        // })
 
-        if(!messageDoc)
-        {
-            throw new Error("Error in creating the new Message")
-        }
+        // if(!messageDoc)
+        // {
+        //     throw new Error("Error in creating the new Message")
+        // }
 
-        return res.status(201).json({
-            message:"New Message is created",
-            isSuccess:true,
+        // return res.status(201).json({
+        //     message:"New Message is created",
+        //     isSuccess:true,
+        // })
+        const response = await createMessage(conversationId,type,senderMobileNumber,message)
+
+        return res.status(response.status).json({
+            message:response.message,
+            isSuccess:response.isSuccess
         })
 
     } catch (error) {
