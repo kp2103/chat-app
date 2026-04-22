@@ -16,16 +16,27 @@ interface ClientToServerEvents{
             type:string
         },        
         callback:(arg: {
-            message:string,
-            status:number,
+            message:string ,
+            status:number ,
             isSuccess: boolean
         })=>any
     )=>void
 }
 
+interface CreateMessageResponse{
+    status:number,
+    message:string,
+    isSuccess:boolean
+}
+
 export function initSocket(httpServer: HTTPServer)
 {
-    const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer);
+    const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer,{
+        cors:{
+            origin:'*',
+            methods:["GET","POST"]
+        }
+    });
 
     io.on("connection",(socket)=>{
 
@@ -42,7 +53,7 @@ export function initSocket(httpServer: HTTPServer)
             //save message roomId = conversationId
             const response = createMessage(roomId,type,senderMobileNumber,message)
             
-            response.then((res)=>{
+            response.then((res:CreateMessageResponse)=>{
                 callback({
                     status:res.status,
                     message:res.message,
@@ -51,6 +62,7 @@ export function initSocket(httpServer: HTTPServer)
             })
 
             socket.to(roomId).emit('receive-message',message)
+
         })
     })
 }

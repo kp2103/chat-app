@@ -9,6 +9,12 @@ interface CreateMessageBody {
     type: "Text" | "Image" | "Document";
 }
 
+interface CreateMessageResponse{
+    status:number,
+    message:string,
+    isSuccess:boolean
+}
+
 export async function createMessageController(req:Request<{},{},CreateMessageBody>,res:Response)
 {
     try {
@@ -53,7 +59,7 @@ export async function createMessageController(req:Request<{},{},CreateMessageBod
         //     message:"New Message is created",
         //     isSuccess:true,
         // })
-        const response = await createMessage(conversationId,type,senderMobileNumber,message)
+        const response:CreateMessageResponse = await createMessage(conversationId,type,senderMobileNumber,message)
 
         return res.status(response.status).json({
             message:response.message,

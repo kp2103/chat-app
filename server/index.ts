@@ -7,10 +7,12 @@ import { createServer } from "http"
 import { conversationRoute } from "./routes/ConversationRoute.ts"
 import { userRoute } from "./routes/UserRoute.ts"
 import { messageRoute } from "./routes/MessageRoute.ts"
+import cors from 'cors'
 
 const app = express()
 const server = createServer(app)
 
+app.use(cors({origin:'*'}))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
