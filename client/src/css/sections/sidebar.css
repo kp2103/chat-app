@@ -41,7 +41,7 @@
 }
 
 .own-profile__name {
-	font-size: var(--tx-md);
+	font-size: var(--tx-lg);
 	font-weight: 700;
 	color: var(--n-800);
 	letter-spacing: -0.2px;
@@ -141,7 +141,7 @@
 
 .conv-item__name {
 	color: var(--n-800);
-	font-size: var(--tx-sm);
+	font-size: var(--tx-md);
 	font-weight: 600;
 
 	white-space: nowrap;
@@ -159,8 +159,8 @@
 }
 
 .conv-item__preview {
-	color: var(--n-400);
-	font-size: var(--tx-xs);
+	color: var(--n-500);
+	font-size: var(--tx-sm);
 
 	white-space: nowrap;
 	overflow: hidden;

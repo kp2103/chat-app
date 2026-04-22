@@ -75,7 +75,37 @@
 
 	display: flex;
 	flex-direction: column;
+	justify-content: end;
 	gap: var(--s1);
+}
+
+.chat-message {
+	align-self: start;
+
+	max-width: 80%;
+	color: var(--n-800);
+	padding: calc(var(--s2) / 2) var(--s2);
+	background: var(--n-0);
+	font-size: var(--tx-md);
+	border-radius: var(--r-sm);
+
+	display: flex;
+	flex-direction: column;
+}
+
+.message-time {
+	color: var(--n-600);
+	font-size: var(--tx-xs);
+}
+
+.chat-message--sent {
+	align-self: end;
+
+	background: var(--brand-500);
+}
+
+.chat-message--sent .message-time {
+	text-align: right;
 }
 
 .chat-input {

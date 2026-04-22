@@ -23,11 +23,11 @@
 }
 
 .avatar--md {
-	width: var(--s8);
-	height: var(--s8);
+	width: var(--s9);
+	height: var(--s9);
 }
 
-.avatar--xl {
+.avatar--lg {
 	width: var(--s10);
 	height: var(--s10);
 }

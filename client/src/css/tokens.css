@@ -43,7 +43,7 @@
 	/* Surfaces */
 	--sf-app: var(--n-50);
 	--sf-panel: var(--n-0);
-	--sf-chat: var(--n-50);
+	--sf-chat: var(--n-100);
 	--sf-input: var(--n-100);
 	--sf-hover: var(--n-50);
 	--sf-selected: #ebfaf8;
