@@ -1,3 +1,4 @@
+import ConversationModel from "../model/Conversation.model.ts";
 import MessageModel from "../model/Message.model.ts";
 
 export async function createMessage(
@@ -24,8 +25,21 @@ export async function createMessage(
       };
     }
 
+    // fetch conversation
+    const conversationDoc = await ConversationModel.findOne({
+        conversationId
+    })
+
+    if(!conversationDoc)
+    {
+        return {
+            message:"Can not find the Conversation",
+            isSuccess:false
+        }
+    }
+
     const messageDoc = await MessageModel.create({
-      conversationId,
+      conversationId : conversationDoc?._id,
       type,
       senderMobileNumber,
       content: {
