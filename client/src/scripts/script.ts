@@ -1,24 +1,6 @@
 import { createConversationCard } from './conversation.js';
-import { createMessageCard } from './message.js';
 import { phoneNumber } from './setVariable.js';
 import { createUserProfile } from './user.js';
-
-declare const io: any;
-
-const socket = io(`http://localhost:4000`, {
-	transports: ['websocket'],
-});
-
-
-socket.on('receive-message', (msg: string) => {
-	if (msg) {
-		createMessageCard({
-			message: msg,
-			timeStamp: new Date().toString(),
-			userMobileNumber: phoneNumber,
-		});
-	}
-});
 
 async function loadConversation(mobileNumber: string) {
 	const res = await fetch(
@@ -63,5 +45,3 @@ async function loadUser(mobileNumber: string) {
 	});
 }
 loadUser(phoneNumber);
-
-export { socket };

@@ -1,5 +1,4 @@
 import { createMessageCard } from './message.js';
-import { socket } from './script.js';
 import { phoneNumber } from './setVariable.js';
 import { getPersonAvatar, getPersonName } from './utils.js';
 
@@ -23,6 +22,24 @@ const chatTitle = document.getElementById('chat-title') as HTMLPreElement;
 let currentConversationId: null | string = null;
 
 chatArea.style.display = 'none';
+
+declare const io: any;
+
+const socket = io(`http://localhost:4000`, {
+	transports: ['websocket'],
+});
+
+socket.on('receive-message', (msg: string) => {
+	if (msg) {
+		createMessageCard({
+			message: msg,
+			timeStamp: new Date().toString(),
+			userMobileNumber: phoneNumber,
+		});
+
+		updateConversationCard(currentConversationId!, msg);
+	}
+});
 
 convList.addEventListener('click', (e) => {
 	const target = e.target as HTMLElement | null;
@@ -89,6 +106,8 @@ async function sendMessage(e: PointerEvent) {
 					senderMobileNumber: phoneNumber,
 				});
 
+				updateConversationCard(currentConversationId!, inputMessage.value);
+
 				inputMessage.value = '';
 			}
 		},
@@ -96,6 +115,23 @@ async function sendMessage(e: PointerEvent) {
 }
 
 sendBtn.addEventListener('click', (e) => sendMessage(e));
+
+function updateConversationCard(conversationId: string, message: string) {
+	console.log(conversationId);
+
+	const convEle = convList.querySelector(
+		`[data-conversation-id="${conversationId}"]`,
+	) as HTMLLIElement;
+
+	const date: Date = new Date();
+
+	const hours = date.getHours().toString().padStart(2, '0');
+	const minutes = date.getMinutes().toString().padStart(2, '0');
+
+	convEle.querySelector('.conv-item__time')!.textContent = `${hours}:${minutes}`;
+
+	convEle.querySelector('.conv-item__preview')!.textContent = message;
+}
 
 function createAvatarElement({ participants }: { participants: Participant[] }) {
 	const convItemAvatarEle = document.createElement('div');
@@ -152,8 +188,8 @@ function createBodyElement({
 
 		const date: Date = new Date(latestTime);
 
-		const hours = date.getHours();
-		const minutes = date.getMinutes();
+		const hours = date.getHours().toString().padStart(2, '0');
+		const minutes = date.getMinutes().toString().padStart(2, '0');
 		convItemTimeEle.textContent = `${hours}:${minutes}`;
 
 		convItemRowEle.appendChild(convItemTimeEle);
