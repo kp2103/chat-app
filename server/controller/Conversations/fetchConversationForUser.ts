@@ -3,8 +3,7 @@ import type { Request, Response } from "express";
 import UserModel from "../../model/User.model.ts";
 import {
   getLatestConversations,
-  type LatestMessageReturType,
-} from "../../services/getLatestMessageForConversation.ts";
+} from "../../services/getLatestMessageForConversation.service.ts";
 
 interface FetchConversationForUserParams {
   mobileNumber: string;
