@@ -34,7 +34,8 @@ export async function createMessage(
     {
         return {
             message:"Can not find the Conversation",
-            isSuccess:false
+            isSuccess:false,
+            status:400
         }
     }
 

@@ -19,13 +19,28 @@ interface ClientToServerEvents {
 	) => void;
 }
 
+interface CreateMessageResponse {
+	status: number;
+	message: string;
+	isSuccess: boolean;
+}
+
 export function initSocket(httpServer: HTTPServer) {
 	const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
-		cors: { origin: '*', methods: ['GET', 'POST'] },
+		cors: {
+			origin: '*',
+			methods: ['GET', 'POST'],
+		},
 	});
 
 	io.on('connection', (socket) => {
 		console.log('New Socket is Connected with id :', socket.id);
+
+		// listen for join room
+		socket.on('join-room', (roomId) => {
+			// * roomId = conversationId
+			if (roomId) socket.join(roomId);
+		});
 
 		// listen for join room
 		socket.on('join-room', (roomId) => {
@@ -40,7 +55,7 @@ export function initSocket(httpServer: HTTPServer) {
 				//save message roomId = conversationId
 				const response = createMessage(roomId, type, senderMobileNumber, message);
 
-				response.then((res) => {
+				response.then((res: CreateMessageResponse) => {
 					callback({
 						status: res.status,
 						message: res.message,

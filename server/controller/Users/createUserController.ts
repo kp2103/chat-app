@@ -4,15 +4,16 @@ import UserModel from "../../model/User.model.ts";
 interface CreateUserBody {
     firstName:string,
     lastName:string,
-    mobileNumber:string
+    mobileNumber:string,
+    avatarURL:string
 }
 
 export async function createUserController(req:Request<{},{},CreateUserBody>,res:Response) {
     try {
         // console.log("Req.Body",req.body)
-        const {firstName,lastName,mobileNumber} = req.body
+        const {firstName,lastName,mobileNumber,avatarURL} = req.body
 
-        if(!firstName || !lastName || !mobileNumber)
+        if(!firstName || !lastName || !mobileNumber || !avatarURL)
         {
             return res.status(400).json({
                 message:"firstName,lastName and mobileNumber are required",
@@ -23,7 +24,8 @@ export async function createUserController(req:Request<{},{},CreateUserBody>,res
         const user = await UserModel.create({
             firstName,
             lastName,
-            mobileNumber
+            mobileNumber,
+            avatarURL
         })
 
         return res.status(201).json({

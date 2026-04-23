@@ -17,15 +17,15 @@ let phoneNumber: string;
 
 switch (browser) {
 	case 'chrome':
-		phoneNumber = '6355573856';
+		phoneNumber = '8409169809';
 		break;
 	case 'firefox':
+		phoneNumber = '9649486218';
+		break;
+	case 'edge':
 		phoneNumber = '7096098839';
 		break;
 	case 'safari':
-		phoneNumber = '7096098839';
-		break;
-	case 'edge':
 		phoneNumber = '7096098839';
 		break;
 	default:

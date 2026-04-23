@@ -22,11 +22,14 @@
 	}
 }
 
+.avatar--sm {
+	width: var(--s8);
+	height: var(--s8);
+}
 .avatar--md {
 	width: var(--s9);
 	height: var(--s9);
 }
-
 .avatar--lg {
 	width: var(--s10);
 	height: var(--s10);
