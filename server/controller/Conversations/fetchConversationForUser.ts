@@ -10,8 +10,8 @@ interface ConversationPreview {
 	type: 'Direct' | 'Group';
 	name: string;
 	conversationId: string;
-	latestMessage: string;
-	latestTime: Date;
+	latestMessage?: string;
+	latestTime?: Date;
 }
 
 export async function fetchConversationForUser(
