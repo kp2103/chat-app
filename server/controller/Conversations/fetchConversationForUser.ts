@@ -12,8 +12,8 @@ interface ConversationPreview {
   type: "Direct" | "Group";
   name: string;
   conversationId: string;
-  latestMessage: string;
-  latestTime: Date;
+  latestMessage?: string;
+  latestTime?: Date;
 }
 
 export async function fetchConversationForUser(
@@ -53,7 +53,7 @@ export async function fetchConversationForUser(
       participants: userDoc._id,
     })
       .select("conversationId type name participants")
-      .populate("participants", "firstName lastName mobileNumber")
+      .populate("participants", "firstName lastName mobileNumber avatarURL")
       .lean<ConversationPreview[]>();
 
     if (conversationDoc.length == 0) {
