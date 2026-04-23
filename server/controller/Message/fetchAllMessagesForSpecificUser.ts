@@ -35,7 +35,7 @@ export async function fetchAllMessagesForSpecificUserController(req:Request<Fetc
 
         const messagesDoc = await MessageModel.find({
             conversationId : conversationDoc._id
-        }).select("senderMobileNumber type content")
+        }).select("senderMobileNumber type content createdAt")
         
         return res.status(200).json({
             message:"Messages found",
