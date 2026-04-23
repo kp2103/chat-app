@@ -5,6 +5,7 @@ interface IUser extends Document {
     firstName:string,
     lastName:string,
     mobileNumber:string,
+    avatarURL:string,
     createdAt: Date;
     updatedAt: Date;
 }
@@ -30,6 +31,10 @@ const UserSchema = new Schema<IUser>(
                 "Mobile number must be 10 digits and start from 6-9",
             ],
         },
+        avatarURL:{
+            type:String,
+            match:[/^https?:\/\/.+\..+$/,"Invalid URL"]
+        }
     },
     { timestamps: true }
 );
