@@ -14,10 +14,16 @@ async function loadConversation(mobileNumber: string) {
 	);
 
 	const resObj = await res.json();
+
+	console.log(resObj);
+	
 	const conversations = await resObj.conversations;
 
 	for (const conversation of conversations) {
 		createConversationCard({
+			type: conversation.type,
+			name: conversation.name,
+			groupAvatarUrl: conversation.groupAvatarURL,
 			conversationId: conversation.conversationId,
 			latestMessage: conversation.latestMessage,
 			latestTime: conversation.latestTime,
@@ -36,6 +42,9 @@ async function loadUser(mobileNumber: string) {
 	});
 
 	const resObj = await res.json();
+
+	console.log(resObj);
+
 	const user = await resObj.user;
 
 	createUserProfile({

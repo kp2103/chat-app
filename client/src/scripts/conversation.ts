@@ -133,7 +133,17 @@ function updateConversationCard(conversationId: string, message: string) {
 	convEle.querySelector('.conv-item__preview')!.textContent = message;
 }
 
-function createAvatarElement({ participants }: { participants: Participant[] }) {
+function createAvatarElement({
+	participants,
+	type,
+	name,
+	groupAvatarUrl,
+}: {
+	participants: Participant[];
+	type: 'Direct' | 'Group';
+	name: string;
+	groupAvatarUrl: string;
+}) {
 	const convItemAvatarEle = document.createElement('div');
 	convItemAvatarEle.classList.add('conv-item__avatar');
 
@@ -145,8 +155,10 @@ function createAvatarElement({ participants }: { participants: Participant[] }) 
 
 	const avatarImageEle = document.createElement('img');
 
-	avatarImageEle.src = getPersonAvatar(participants, phoneNumber);
-	avatarImageEle.alt = getPersonName(participants, phoneNumber);
+	avatarImageEle.src =
+		type === 'Group' ? groupAvatarUrl : getPersonAvatar(participants, phoneNumber);
+	avatarImageEle.alt =
+		type === 'Group' ? name : getPersonName(participants, phoneNumber);
 
 	avatarEle.appendChild(avatarImageEle);
 
@@ -165,7 +177,11 @@ function createBodyElement({
 	latestMessage,
 	latestTime,
 	participants,
+	type,
+	name,
 }: {
+	type: 'Direct' | 'Group';
+	name: string;
 	latestMessage: string;
 	latestTime: string;
 	participants: Participant[];
@@ -178,7 +194,8 @@ function createBodyElement({
 
 	const convItemNameEle = document.createElement('span');
 	convItemNameEle.classList.add('conv-item__name');
-	convItemNameEle.textContent = getPersonName(participants, phoneNumber);
+	convItemNameEle.textContent =
+		type === 'Group' ? name : getPersonName(participants, phoneNumber);
 
 	convItemRowEle.appendChild(convItemNameEle);
 
@@ -210,22 +227,35 @@ function createConversationCard({
 	latestMessage,
 	latestTime,
 	participants,
+	type,
+	name,
+	groupAvatarUrl,
 }: {
+	type: 'Direct' | 'Group';
+	name: string;
 	conversationId: string;
 	latestMessage: string;
 	latestTime: string;
 	participants: Participant[];
+	groupAvatarUrl: string;
 }) {
 	const listEle = document.createElement('li');
 	listEle.classList.add('conv-item');
 	listEle.dataset.conversationId = conversationId;
 
-	const convItemAvatarEle = createAvatarElement({ participants });
+	const convItemAvatarEle = createAvatarElement({
+		participants,
+		type,
+		groupAvatarUrl,
+		name,
+	});
 
 	const convItemBodyEle = createBodyElement({
 		latestMessage,
 		latestTime,
 		participants,
+		type,
+		name,
 	});
 
 	listEle.appendChild(convItemAvatarEle);

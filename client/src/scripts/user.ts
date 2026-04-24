@@ -28,6 +28,8 @@ function createUserProfile({ firstName, lastName, avatarUrl }: User) {
 
 	ownProfile.appendChild(userAvatarWrapperEle);
 	ownProfile.appendChild(userNameEle);
+
+	(document.querySelector('.nav-rail__user img') as HTMLImageElement).src = avatarUrl;
 }
 
 export { createUserProfile };

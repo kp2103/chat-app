@@ -20,7 +20,7 @@ switch (browser) {
 		phoneNumber = '8409169809';
 		break;
 	case 'firefox':
-		phoneNumber = '9649486218';
+		phoneNumber = '9978449197';
 		break;
 	case 'edge':
 		phoneNumber = '7096098839';
