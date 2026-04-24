@@ -52,7 +52,7 @@ export async function fetchConversationForUser(
     const conversationDoc = await ConversationModel.find({
       participants: userDoc._id,
     })
-      .select("conversationId type name participants")
+      .select("conversationId type name participants groupAvatarURL")
       .populate("participants", "firstName lastName mobileNumber avatarURL")
       .lean<ConversationPreview[]>();
 

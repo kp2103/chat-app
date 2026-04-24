@@ -60,6 +60,7 @@ interface IConversation extends Document {
     name: string | null;
     createdAt: Date;
     updatedAt: Date;
+    groupAvatarURL:string;
 }
 
 const ConversationSchema = new Schema<IConversation>(
@@ -86,6 +87,11 @@ const ConversationSchema = new Schema<IConversation>(
       trim: true,
       default: null,
     },
+    groupAvatarURL:{
+      type:String,
+      trim:true,
+      default:"https://i.pravatar.cc/400?img=1"
+    }
   },
   { timestamps: true }
 );
