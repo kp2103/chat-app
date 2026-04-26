@@ -27,6 +27,7 @@
 			defer
 			src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 	</head>
+
 	<body>
 		<div class="app">
 			<nav class="nav-rail">
@@ -34,7 +35,8 @@
 					class="nav-rail__logo"
 					href="#">
 					<svg class="icon--large">
-						<use href="../src/assets/icons/ui_icons_sprite.svg#chat"></use>
+						<use
+							href="../src/assets/icons/ui_icons_sprite.svg#chat"></use>
 					</svg>
 				</a>
 
@@ -42,10 +44,15 @@
 					class="nav-item nav-item--active"
 					id="nav-chats">
 					<svg class="icon--medium">
-						<use href="../src/assets/icons/ui_icons_sprite.svg#chat"></use>
+						<use
+							href="../src/assets/icons/ui_icons_sprite.svg#chat"></use>
 					</svg>
 
-					<span class="nav-item__badge nav-item__badge--count">3</span>
+					<span
+						class="nav-item__badge nav-item__badge--count"
+						id="chat-badge-count"
+						>3</span
+					>
 				</button>
 
 				<button
@@ -59,15 +66,16 @@
 
 				<button
 					class="nav-item"
-					id="nav-call">
+					id="nav-call-history">
 					<svg class="icon--medium">
-						<use href="../src/assets/icons/ui_icons_sprite.svg#call"></use>
+						<use
+							href="../src/assets/icons/ui_icons_sprite.svg#call"></use>
 					</svg>
 				</button>
 
 				<button
 					class="nav-item"
-					id="nav-video">
+					id="nav-video-history">
 					<svg class="icon--medium">
 						<use
 							href="../src/assets/icons/ui_icons_sprite.svg#video-call"></use>
@@ -87,8 +95,9 @@
 
 				<div class="nav-rail__user">
 					<img
-						src="https://i.pravatar.cc/40?img=12"
-						alt="Himanshu Sorathiya" />
+						src=""
+						alt="User Profile"
+						id="user-nav-img" />
 				</div>
 			</nav>
 
@@ -107,7 +116,9 @@
 						</button>
 					</div>
 
-					<div class="own-profile"></div>
+					<div
+						class="own-profile"
+						id="own-profile-container"></div>
 
 					<div class="search-bar">
 						<input
@@ -157,13 +168,15 @@
 
 				<main
 					class="chat-area"
-					id="chat-panel">
+					id="chat-panel"
+					style="display: none">
 					<div class="chat-header">
 						<div class="chat-header__info">
 							<div class="avatar avatar--sm">
 								<img
 									src=""
-									alt="" />
+									alt=""
+									id="chat-header-img" />
 							</div>
 
 							<div class="chat-header__text">
@@ -173,14 +186,16 @@
 
 								<p
 									class="chat-header__sub"
-									id="chat-subtitle"></p>
+									id="chat-subtitle">
+									Online
+								</p>
 							</div>
 						</div>
 
 						<div class="chat-header__actions">
 							<button
 								class="icon-btn"
-								id="btn-search">
+								id="btn-search-chat">
 								<svg class="icon--small">
 									<use
 										href="../src/assets/icons/ui_icons_sprite.svg#search"></use>
@@ -207,7 +222,7 @@
 
 							<button
 								class="icon-btn"
-								id="btn-more">
+								id="btn-more-options">
 								<svg class="icon--small">
 									<use
 										href="../src/assets/icons/ui_icons_sprite.svg#ellipsis-vertical"></use>
@@ -247,10 +262,6 @@
 		<script
 			defer
 			type="module"
-			src="../dist/scripts/script.js"></script>
-		<script
-			defer
-			type="module"
-			src="../dist/scripts/setVariable.js"></script>
+			src="../dist/scripts/main.js"></script>
 	</body>
 </html>
