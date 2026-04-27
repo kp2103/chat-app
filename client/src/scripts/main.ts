@@ -30,18 +30,21 @@ async function initApp() {
 	userStore.conversations = await fetchConversations(userStore.user?.mobileNumber);
 	updateFilters();
 
-	onMessageReceived((data: { message: string; senderMobileNumber: string }) => {
-		if (currentConversationId) {
-			renderMessageCard({
-				message: data.message,
-				timeStamp: new Date().toISOString(),
-				userMobileNumber: userStore.user!.mobileNumber,
-				senderMobileNumber: data.senderMobileNumber,
-			});
+	onMessageReceived(
+		(data: { message: string; senderMobileNumber: string; messageId: string }) => {
+			if (currentConversationId) {
+				renderMessageCard({
+					messageId: data.messageId,
+					message: data.message,
+					timeStamp: new Date().toISOString(),
+					userMobileNumber: userStore.user!.mobileNumber,
+					senderMobileNumber: data.senderMobileNumber,
+				});
 
-			updateConversationPreview(currentConversationId, data.message);
-		}
-	});
+				updateConversationPreview(currentConversationId, data.message);
+			}
+		},
+	);
 }
 
 convList.addEventListener('click', async (e) => {
@@ -88,6 +91,7 @@ async function handleSendMessage() {
 	emitChatMessage(payload, (res) => {
 		if (res.isSuccess) {
 			renderMessageCard({
+				messageId: res.messageId,
 				message: content,
 				timeStamp: new Date().toISOString(),
 				userMobileNumber: userStore.user!.mobileNumber,

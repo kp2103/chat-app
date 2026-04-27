@@ -7,6 +7,7 @@ const chatBody = document.getElementById('chat-body') as HTMLDivElement;
 function renderMessageCard(msg: Message) {
 	const messageEle = document.createElement('p');
 	messageEle.classList.add('chat-message');
+	messageEle.dataset.messageId = msg.messageId;
 
 	if (msg.senderMobileNumber === userStore.user?.mobileNumber) {
 		messageEle.classList.add('chat-message--sent');

@@ -3,7 +3,11 @@ import { Server } from 'socket.io';
 import { createMessage } from './services/createMessage.service.ts';
 
 interface ServerToClientEvents {
-	'receive-message': (data: { message: string; senderMobileNumber: string }) => void;
+	'receive-message': (data: {
+		message: string;
+		senderMobileNumber: string;
+		messageId: string | undefined;
+	}) => void;
 }
 
 interface ClientToServerEvents {
@@ -15,7 +19,12 @@ interface ClientToServerEvents {
 			senderMobileNumber: string;
 			type: string;
 		},
-		callback: (arg: { message: string; status: number; isSuccess: boolean }) => any,
+		callback: (arg: {
+			message: string;
+			status: number;
+			isSuccess: boolean;
+			messageId: string | undefined;
+		}) => any,
 	) => void;
 }
 
@@ -23,6 +32,7 @@ interface CreateMessageResponse {
 	status: number;
 	message: string;
 	isSuccess: boolean;
+	messageId: string | undefined;
 }
 
 export function initSocket(httpServer: HTTPServer) {
@@ -42,12 +52,6 @@ export function initSocket(httpServer: HTTPServer) {
 			if (roomId) socket.join(roomId);
 		});
 
-		// listen for join room
-		socket.on('join-room', (roomId) => {
-			// * roomId = conversationId
-			if (roomId) socket.join(roomId);
-		});
-
 		//listen for send-message
 		socket.on(
 			'send-message',
@@ -55,16 +59,21 @@ export function initSocket(httpServer: HTTPServer) {
 				//save message roomId = conversationId
 				const response = createMessage(roomId, type, senderMobileNumber, message);
 
-				response.then((res: CreateMessageResponse) => {
-					callback({
+				response.then((res) => {
+					const formattedResponse: CreateMessageResponse = {
 						status: res.status,
 						message: res.message,
 						isSuccess: res.isSuccess,
-					});
+						messageId: res.messageId?.toString(),
+					};
 
-					socket
-						.to(roomId)
-						.emit('receive-message', { message, senderMobileNumber });
+					callback(formattedResponse);
+
+					socket.to(roomId).emit('receive-message', {
+						message,
+						senderMobileNumber,
+						messageId: formattedResponse.messageId,
+					});
 				});
 			},
 		);

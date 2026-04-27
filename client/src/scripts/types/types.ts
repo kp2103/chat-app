@@ -27,6 +27,7 @@ interface GroupConversation extends BaseConversation {
 type Conversation = DirectConversation | GroupConversation;
 
 interface Message {
+	messageId: string;
 	message: string;
 	timeStamp: string;
 	userMobileNumber: string;

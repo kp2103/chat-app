@@ -24,7 +24,11 @@ const joinChatRoom = (roomId: string) => {
 
 const emitChatMessage = (
 	payload: SocketMessagePayload,
-	callback: (response: { isSuccess: boolean; message: string }) => void,
+	callback: (response: {
+		isSuccess: boolean;
+		message: string;
+		messageId: string;
+	}) => void,
 ) => {
 	if (!socket) return;
 
@@ -32,13 +36,17 @@ const emitChatMessage = (
 };
 
 const onMessageReceived = (
-	callback: (data: { message: string; senderMobileNumber: string }) => void,
+	callback: (data: {
+		message: string;
+		senderMobileNumber: string;
+		messageId: string;
+	}) => void,
 ) => {
 	if (!socket) return;
 
 	socket.on(
 		'receive-message',
-		(data: { message: string; senderMobileNumber: string }) => {
+		(data: { message: string; senderMobileNumber: string; messageId: string }) => {
 			callback(data);
 		},
 	);

@@ -38,6 +38,7 @@ async function fetchMessages(roomId: string): Promise<Message[]> {
 
 	return messages.map(
 		(msg): Message => ({
+			messageId: msg._id,
 			message: msg.content.text,
 			timeStamp: msg.createdAt,
 			senderMobileNumber: msg.senderMobileNumber,
