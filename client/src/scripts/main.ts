@@ -20,7 +20,7 @@ const msgInput = document.getElementById('msg-input') as HTMLInputElement;
 const sendBtn = document.getElementById('btn-send') as HTMLButtonElement;
 
 let currentConversationId: string | null = null;
-const convItems = document.getElementsByClassName('.conv-item');
+const convItems = document.getElementsByClassName('conv-item');
 
 async function initApp() {
 	initSocket();
@@ -94,7 +94,9 @@ async function handleSendMessage() {
 				userMobileNumber: phoneNumber,
 				senderMobileNumber: phoneNumber,
 			});
+
 			updateConversationPreview(currentConversationId!, content);
+
 			msgInput.value = '';
 		}
 	});

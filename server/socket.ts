@@ -61,11 +61,11 @@ export function initSocket(httpServer: HTTPServer) {
 						message: res.message,
 						isSuccess: res.isSuccess,
 					});
-				});
 
-				socket
-					.to(roomId)
-					.emit('receive-message', { message, senderMobileNumber });
+					socket
+						.to(roomId)
+						.emit('receive-message', { message, senderMobileNumber });
+				});
 			},
 		);
 	});
