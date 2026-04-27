@@ -1,6 +1,6 @@
 const BASE_URL = 'http://localhost:4000/api/v1';
 
-async function client<T>(
+async function handleApiRequest<T>(
 	endpoint: string,
 	{ body, ...customConfig }: RequestInit = {},
 ): Promise<T> {
@@ -29,4 +29,4 @@ async function client<T>(
 	return await response.json();
 }
 
-export { client };
+export { handleApiRequest };

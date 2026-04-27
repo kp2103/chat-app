@@ -1,37 +1,39 @@
 import type { Conversation, Message } from '../types/types.js';
-import { client } from './client.js';
+import { mapParticipant } from '../utils/helpers.js';
+import { handleApiRequest } from './client.js';
 
 async function fetchConversations(mobileNumber: string): Promise<Conversation[]> {
-	const response = await client<{ conversations: any[] }>(
+	const response = await handleApiRequest<{ conversations: any[] }>(
 		`conversations/${mobileNumber}`,
 	);
 	const { conversations } = response;
 
 	return conversations.map((conv): Conversation => {
+		const conversation = {
+			conversationId: conv.conversationId,
+			latestMessage: conv.latestMessage,
+			latestTime: conv.latestTime,
+			participants: conv.participants.map(mapParticipant),
+		};
+
 		if (conv.type === 'Group') {
 			return {
-				conversationId: conv.conversationId,
+				...conversation,
 				type: 'Group',
 				groupName: conv.name,
 				groupAvatarUrl: conv.groupAvatarURL,
-				latestMessage: conv.latestMessage,
-				latestTime: conv.latestTime,
-				participants: conv.participants,
 			};
 		} else {
 			return {
-				conversationId: conv.conversationId,
+				...conversation,
 				type: 'Direct',
-				latestMessage: conv.latestMessage,
-				latestTime: conv.latestTime,
-				participants: conv.participants,
 			};
 		}
 	});
 }
 
 async function fetchMessages(roomId: string): Promise<Message[]> {
-	const response = await client<{ messages: any[] }>(`messages/${roomId}`);
+	const response = await handleApiRequest<{ messages: any[] }>(`messages/${roomId}`);
 	const { messages } = response;
 
 	return messages.map(

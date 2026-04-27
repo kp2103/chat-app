@@ -31,12 +31,17 @@ const emitChatMessage = (
 	socket.emit('send-message', payload, callback);
 };
 
-const onMessageReceived = (callback: (msg: string) => void) => {
+const onMessageReceived = (
+	callback: (data: { message: string; senderMobileNumber: string }) => void,
+) => {
 	if (!socket) return;
 
-	socket.on('receive-message', (msg: string) => {
-		callback(msg);
-	});
+	socket.on(
+		'receive-message',
+		(data: { message: string; senderMobileNumber: string }) => {
+			callback(data);
+		},
+	);
 };
 
 const getSocket = () => socket;

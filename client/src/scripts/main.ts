@@ -30,16 +30,16 @@ async function initApp() {
 	const conversations = await fetchConversations(phoneNumber);
 	conversations.forEach(renderConversationCard);
 
-	onMessageReceived((msg: string) => {
+	onMessageReceived((data: { message: string; senderMobileNumber: string }) => {
 		if (currentConversationId) {
 			renderMessageCard({
-				message: msg,
+				message: data.message,
 				timeStamp: new Date().toISOString(),
 				userMobileNumber: phoneNumber,
-				senderMobileNumber: 'incoming',
+				senderMobileNumber: data.senderMobileNumber,
 			});
 
-			updateConversationPreview(currentConversationId, msg);
+			updateConversationPreview(currentConversationId, data.message);
 		}
 	});
 }
@@ -58,7 +58,7 @@ convList.addEventListener('click', async (e) => {
 
 	const avatarUrl = convItem.querySelector('img')!.src;
 	const name = convItem.querySelector('.conv-item__name')!.textContent!;
-	updateChatHeader({ name, avatarUrl });
+	updateChatHeader({ name, avatarUrl, type: convItem.dataset.type! });
 
 	joinChatRoom(convId);
 

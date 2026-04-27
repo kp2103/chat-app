@@ -7,9 +7,7 @@ const navUserImg = document.getElementById('user-nav-img') as HTMLImageElement;
 
 const chatHeaderImg = document.getElementById('chat-header-img') as HTMLImageElement;
 const chatTitle = document.getElementById('chat-title') as HTMLParagraphElement;
-const chatSubtitle = document.getElementById(
-	'chat-subtitle',
-) as HTMLParagraphElement;
+const chatSubtitle = document.getElementById('chat-subtitle') as HTMLParagraphElement;
 
 function renderOwnProfile(user: User) {
 	const fullName = `${user.firstName} ${user.lastName}`;
@@ -31,11 +29,7 @@ function renderOwnProfile(user: User) {
 	}
 }
 
-function updateChatHeader(details: {
-	name: string;
-	avatarUrl: string;
-	isGroup?: boolean;
-}) {
+function updateChatHeader(details: { name: string; avatarUrl: string; type: string }) {
 	if (chatHeaderImg) {
 		chatHeaderImg.src = details.avatarUrl;
 		chatHeaderImg.alt = details.name;
@@ -46,7 +40,7 @@ function updateChatHeader(details: {
 	}
 
 	if (chatSubtitle) {
-		chatSubtitle.textContent = details.isGroup ? 'Group Chat' : 'Online';
+		chatSubtitle.textContent = details.type === 'Group' ? 'Group Chat' : 'Online';
 	}
 }
 

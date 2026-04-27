@@ -30,8 +30,7 @@ interface Message {
 	message: string;
 	timeStamp: string;
 	userMobileNumber: string;
-	// TODO - MAKE IT REQUIRED
-	senderMobileNumber?: string;
+	senderMobileNumber: string;
 }
 
 interface SocketMessagePayload {
@@ -41,20 +40,12 @@ interface SocketMessagePayload {
 	senderMobileNumber: string;
 }
 
-interface ApiResponse<T> {
-	isSuccess: boolean;
-	status: number;
-	message: string;
-	data?: T;
-}
-
 export type {
-	ApiResponse,
 	Conversation,
 	DirectConversation,
 	GroupConversation,
 	Message,
 	Participant,
 	SocketMessagePayload,
-	User
+	User,
 };

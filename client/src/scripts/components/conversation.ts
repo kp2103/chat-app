@@ -1,21 +1,7 @@
-import { phoneNumber } from '../config/session.js';
-import type { Conversation, User } from '../types/types.js';
+import type { Conversation } from '../types/types.js';
+import { formatTime, getOtherParticipant } from '../utils/helpers.js';
 
 const convList = document.getElementById('conv-list') as HTMLUListElement;
-
-const getOtherParticipant = (participants: User[]): User => {
-	return participants.find((p) => p.mobileNumber !== phoneNumber)!;
-};
-
-const formatTime = (timeStr: string): string => {
-	const date = timeStr ? new Date(timeStr) : new Date();
-
-	return (
-		date.getHours().toString().padStart(2, '0') +
-		':' +
-		date.getMinutes().toString().padStart(2, '0')
-	);
-};
 
 function renderConversationCard(conv: Conversation) {
 	const isGroup = conv.type === 'Group';
@@ -26,13 +12,12 @@ function renderConversationCard(conv: Conversation) {
 		:	`${getOtherParticipant(conv.participants).firstName} ${getOtherParticipant(conv.participants).lastName}`;
 
 	const displayAvatar =
-		isGroup ?
-			conv.groupAvatarUrl
-		:	getOtherParticipant(conv.participants).avatarUrl;
+		isGroup ? conv.groupAvatarUrl : getOtherParticipant(conv.participants).avatarUrl;
 
 	const listEle = document.createElement('li');
 	listEle.classList.add('conv-item');
 	listEle.dataset.conversationId = conv.conversationId;
+	listEle.dataset.type = conv.type;
 
 	listEle.innerHTML = `
         <div class="conv-item__avatar">
@@ -56,9 +41,7 @@ function renderConversationCard(conv: Conversation) {
 }
 
 function updateConversationPreview(conversationId: string, message: string) {
-	const convEle = convList.querySelector(
-		`[data-conversation-id="${conversationId}"]`,
-	);
+	const convEle = convList.querySelector(`[data-conversation-id="${conversationId}"]`);
 
 	if (!convEle) return;
 
