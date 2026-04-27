@@ -3,7 +3,7 @@ import { Server } from "socket.io";
 import { createMessage } from "./services/createMessage.service.ts";
 
 interface ServerToClientEvents{
-    "receive-message": (message:string)=> void
+    "receive-message": (data:{message:string,senderMobileNumber:string})=> void
 }
 
 interface ClientToServerEvents{
@@ -59,10 +59,8 @@ export function initSocket(httpServer: HTTPServer)
                     message:res.message,
                     isSuccess:res.isSuccess
                 })
+                socket.to(roomId).emit('receive-message',{message,senderMobileNumber})
             })
-
-            socket.to(roomId).emit('receive-message',message)
-
         })
     })
 }
