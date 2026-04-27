@@ -7,6 +7,7 @@ import {
 import { clearChatBody, renderMessageCard } from './components/message.js';
 import { renderOwnProfile, updateChatHeader } from './components/profile.js';
 import { phoneNumber } from './config/session.js';
+import { userStore } from './config/store.js';
 import {
 	emitChatMessage,
 	initSocket,
@@ -25,18 +26,18 @@ const convItems = document.getElementsByClassName('conv-item');
 async function initApp() {
 	initSocket();
 
-	const user = await fetchUserProfile(phoneNumber);
-	renderOwnProfile(user);
+	userStore.user = await fetchUserProfile(phoneNumber);
+	renderOwnProfile(userStore.user);
 
-	const conversations = await fetchConversations(phoneNumber);
-	conversations.forEach(renderConversationCard);
+	userStore.conversations = await fetchConversations(userStore.user?.mobileNumber);
+	userStore.conversations.forEach(renderConversationCard);
 
 	onMessageReceived((data: { message: string; senderMobileNumber: string }) => {
 		if (currentConversationId) {
 			renderMessageCard({
 				message: data.message,
 				timeStamp: new Date().toISOString(),
-				userMobileNumber: phoneNumber,
+				userMobileNumber: userStore.user!.mobileNumber,
 				senderMobileNumber: data.senderMobileNumber,
 			});
 
@@ -70,7 +71,7 @@ convList.addEventListener('click', async (e) => {
 
 	const messages = await fetchMessages(convId);
 	messages.forEach((msg) =>
-		renderMessageCard({ ...msg, userMobileNumber: phoneNumber }),
+		renderMessageCard({ ...msg, userMobileNumber: userStore.user!.mobileNumber }),
 	);
 });
 
@@ -83,7 +84,7 @@ async function handleSendMessage() {
 		message: content,
 		type: 'Text',
 		roomId: currentConversationId,
-		senderMobileNumber: phoneNumber,
+		senderMobileNumber: userStore.user!.mobileNumber,
 	};
 
 	emitChatMessage(payload, (res) => {
@@ -91,8 +92,8 @@ async function handleSendMessage() {
 			renderMessageCard({
 				message: content,
 				timeStamp: new Date().toISOString(),
-				userMobileNumber: phoneNumber,
-				senderMobileNumber: phoneNumber,
+				userMobileNumber: userStore.user!.mobileNumber,
+				senderMobileNumber: userStore.user!.mobileNumber,
 			});
 
 			updateConversationPreview(currentConversationId!, content);

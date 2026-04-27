@@ -1,4 +1,4 @@
-import { phoneNumber } from '../config/session.js';
+import { userStore } from '../config/store.js';
 import type { Message } from '../types/types.js';
 import { formatTime } from '../utils/helpers.js';
 
@@ -8,7 +8,7 @@ function renderMessageCard(msg: Message) {
 	const messageEle = document.createElement('p');
 	messageEle.classList.add('chat-message');
 
-	if (msg.senderMobileNumber === phoneNumber) {
+	if (msg.senderMobileNumber === userStore.user?.mobileNumber) {
 		messageEle.classList.add('chat-message--sent');
 	}
 

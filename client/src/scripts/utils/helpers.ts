@@ -1,4 +1,4 @@
-import { phoneNumber } from '../config/session.js';
+import { userStore } from '../config/store.js';
 import type { Participant } from '../types/types.js';
 
 const mapParticipant = (p: any) => ({
@@ -9,7 +9,7 @@ const mapParticipant = (p: any) => ({
 });
 
 const getOtherParticipant = (participants: Participant[]): Participant => {
-	return participants.find((p) => p.mobileNumber !== phoneNumber)!;
+	return participants.find((p) => p.mobileNumber !== userStore.user?.mobileNumber)!;
 };
 
 const formatTime = (timeStr: string): string => {
