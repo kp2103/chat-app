@@ -20,6 +20,7 @@ const msgInput = document.getElementById('msg-input') as HTMLInputElement;
 const sendBtn = document.getElementById('btn-send') as HTMLButtonElement;
 
 let currentConversationId: string | null = null;
+const convItems = document.getElementsByClassName('.conv-item');
 
 async function initApp() {
 	initSocket();
@@ -58,6 +59,11 @@ convList.addEventListener('click', async (e) => {
 
 	const avatarUrl = convItem.querySelector('img')!.src;
 	const name = convItem.querySelector('.conv-item__name')!.textContent!;
+
+	[...convItems].forEach((item) => item.classList.remove('conv-item--selected'));
+
+	convItem.classList.add('conv-item--selected');
+
 	updateChatHeader({ name, avatarUrl, type: convItem.dataset.type! });
 
 	joinChatRoom(convId);
