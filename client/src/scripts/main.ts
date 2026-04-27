@@ -1,13 +1,11 @@
 import { fetchConversations, fetchMessages } from './api/chatApi.js';
 import { fetchUserProfile } from './api/userApi.js';
-import {
-	renderConversationCard,
-	updateConversationPreview,
-} from './components/conversation.js';
+import { updateConversationPreview } from './components/conversation.js';
 import { clearChatBody, renderMessageCard } from './components/message.js';
 import { renderOwnProfile, updateChatHeader } from './components/profile.js';
 import { phoneNumber } from './config/session.js';
 import { userStore } from './config/store.js';
+import { updateFilters } from './handlers/filterHandler.js';
 import {
 	emitChatMessage,
 	initSocket,
@@ -30,7 +28,7 @@ async function initApp() {
 	renderOwnProfile(userStore.user);
 
 	userStore.conversations = await fetchConversations(userStore.user?.mobileNumber);
-	userStore.conversations.forEach(renderConversationCard);
+	updateFilters();
 
 	onMessageReceived((data: { message: string; senderMobileNumber: string }) => {
 		if (currentConversationId) {
