@@ -13,7 +13,8 @@ export async function createMessage(
         message:
           "ConversationId , message,senderMobileNumber and type is required",
         isSuccess: false,
-        status:400
+        status:400,
+        messageId:undefined
       };
     }
     if (!/^[6-9]\d{9}$/.test(senderMobileNumber)) {
@@ -21,7 +22,8 @@ export async function createMessage(
         message:
           "Sender Mobile number must start with 6-9 and must have exact 10 digit",
         isSuccess: false,
-        status:400
+        status:400,
+        messageId:undefined
       };
     }
 
@@ -35,7 +37,8 @@ export async function createMessage(
         return {
             message:"Can not find the Conversation",
             isSuccess:false,
-            status:400
+            status:400,
+            messageId:undefined
         }
     }
 
@@ -55,7 +58,8 @@ export async function createMessage(
     return {
       message: "New Message is created",
       isSuccess: true,
-      status:201
+      status:201,
+      messageId:messageDoc._id.toString()
     };
   } catch (error) {
     console.log("Error in createMessafe server:", error);
@@ -67,7 +71,8 @@ export async function createMessage(
       return {
         message: error.message,
         isSuccess: false,
-        status:500
+        status:500,
+        messageId:undefined
       };
     }
 
@@ -87,7 +92,8 @@ export async function createMessage(
     return {
       message: "Internal Server Error",
       isSuccess: false,
-      status:500
+      status:500,
+      messageId:undefined
     };
   }
 }
