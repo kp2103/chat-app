@@ -32,19 +32,27 @@ function updateFilters() {
 
 	const conversations = userStore.conversations!.filter((conv) => {
 		return (
-			!filters.conversation.search ||
-			conv.participants.some((participant) => {
-				return (
-					participant.mobileNumber.includes(filters.conversation.search) ||
-					`${participant.firstName} ${participant.lastName}`
-						.toLowerCase()
-						.includes(filters.conversation.search)
-				);
-			})
+			conv.latestMessage &&
+			(!filters.conversation.search ||
+				conv.participants.some((participant) => {
+					return (
+						participant.mobileNumber.includes(filters.conversation.search) ||
+						`${participant.firstName} ${participant.lastName}`
+							.toLowerCase()
+							.includes(filters.conversation.search)
+					);
+				}))
 		);
 	});
 
-	conversations.forEach(renderConversationCard);
+	conversations
+		.toSorted((a, b) => {
+			const timeA = new Date(a.latestTime).getTime();
+			const timeB = new Date(b.latestTime).getTime();
+
+			return timeB - timeA;
+		})
+		.forEach(renderConversationCard);
 }
 
 conversationSearch.addEventListener('input', () =>

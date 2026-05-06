@@ -15,6 +15,17 @@ function renderConversationCard(conv: Conversation) {
 	const displayAvatar =
 		isGroup ? conv.groupAvatarUrl : getOtherParticipant(conv.participants).avatarUrl;
 
+	const isOther = conv.senderMobileNumber !== userStore.user?.mobileNumber;
+	let otherParticipant = undefined;
+	if (isOther) {
+		otherParticipant = conv.participants.find(
+			(participant) => participant.mobileNumber === conv.senderMobileNumber,
+		);
+	}
+
+	const latestMessageSender =
+		!isOther ? 'You' : `${otherParticipant?.firstName} ${otherParticipant?.lastName}`;
+
 	const listEle = document.createElement('li');
 	listEle.classList.add('conv-item');
 	listEle.dataset.conversationId = conv.conversationId;
@@ -34,7 +45,7 @@ function renderConversationCard(conv: Conversation) {
                 <span class="conv-item__name">${displayName}</span>
                 <span class="conv-item__time">${formatTime(conv.latestTime)}</span>
             </div>
-            <p class="conv-item__preview">${conv.senderMobileNumber === userStore.user?.mobileNumber ? 'You' : displayName} : ${conv.latestMessage || ''}</p>
+            <p class="conv-item__preview">${latestMessageSender} : ${conv.latestMessage || ''}</p>
         </div>
     `;
 
@@ -53,8 +64,20 @@ function updateConversationPreview(
 	const previewEle = convEle.querySelector('.conv-item__preview');
 	const timeEle = convEle.querySelector('.conv-item__time');
 
-	if (previewEle)
-		previewEle.textContent = `${senderMobileNumber === userStore.user?.mobileNumber ? 'You' : ''} : ${message}`;
+	const isOther = senderMobileNumber !== userStore.user?.mobileNumber;
+	let otherParticipant = undefined;
+	if (isOther) {
+		otherParticipant = userStore.conversations
+			?.find((conv) => conv.conversationId === conversationId)
+			?.participants.find(
+				(participant) => participant.mobileNumber === senderMobileNumber,
+			);
+	}
+
+	const latestMessageSender =
+		!isOther ? 'You' : `${otherParticipant?.firstName} ${otherParticipant?.lastName}`;
+
+	if (previewEle) previewEle.textContent = `${latestMessageSender} : ${message}`;
 	if (timeEle) timeEle.textContent = formatTime(new Date().toISOString());
 
 	convList.prepend(convEle);
