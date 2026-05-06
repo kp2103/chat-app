@@ -1,6 +1,6 @@
-import {Router} from 'express'
-import {createConversation} from '../controller/Conversations/createConversationController.ts'
-import { fetchConversationForUser } from '../controller/Conversations/fetchConversationForUser.ts'
+import { Router } from 'express';
+import { createConversation } from '../controller/Conversations/createConversationController.ts';
+import { fetchConversationForUser } from '../controller/Conversations/fetchConversationForUser.ts';
 
 const conversationRoute = Router()
 
@@ -19,4 +19,4 @@ conversationRoute.route('/:mobileNumber').get(fetchConversationForUser)
 // route for delete the route
 // conversationRoute.route('/:id').delete()
 
-export { conversationRoute}
+export { conversationRoute };

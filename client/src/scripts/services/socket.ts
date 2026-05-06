@@ -40,13 +40,19 @@ const onMessageReceived = (
 		message: string;
 		senderMobileNumber: string;
 		messageId: string;
+		conversationId: string;
 	}) => void,
 ) => {
 	if (!socket) return;
 
 	socket.on(
 		'receive-message',
-		(data: { message: string; senderMobileNumber: string; messageId: string }) => {
+		(data: {
+			message: string;
+			senderMobileNumber: string;
+			messageId: string;
+			conversationId: string;
+		}) => {
 			callback(data);
 		},
 	);

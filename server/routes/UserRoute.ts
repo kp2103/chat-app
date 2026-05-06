@@ -1,7 +1,7 @@
-import  { Router } from 'express'
-import {fetchUserController} from '../controller/Users/fetchUserController.ts'
-import {createUserController} from '../controller/Users/createUserController.ts'
-import { updateUserProfileController } from '../controller/Users/updateUserProfile.ts'
+import { Router } from 'express';
+import { createUserController } from '../controller/Users/createUserController.ts';
+import { fetchUserController } from '../controller/Users/fetchUserController.ts';
+import { updateUserProfileController } from '../controller/Users/updateUserProfile.ts';
 
 const userRoute = Router()
 
@@ -13,4 +13,4 @@ userRoute.route('/:mobileNumber').get(fetchUserController)
 
 userRoute.route('/:mobileNumber').put(updateUserProfileController)
 
-export {userRoute}
+export { userRoute };

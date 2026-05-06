@@ -11,6 +11,7 @@ interface BaseConversation {
 	conversationId: string;
 	latestMessage: string;
 	latestTime: string;
+	senderMobileNumber: string;
 	participants: Participant[];
 }
 
@@ -48,5 +49,5 @@ export type {
 	Message,
 	Participant,
 	SocketMessagePayload,
-	User,
+	User
 };

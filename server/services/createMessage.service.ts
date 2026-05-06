@@ -59,6 +59,7 @@ export async function createMessage(
 			isSuccess: true,
 			status: 201,
 			messageId: messageDoc._id,
+			conversationId,
 		};
 	} catch (error) {
 		console.log('Error in createMessafe server:', error);

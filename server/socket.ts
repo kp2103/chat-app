@@ -7,6 +7,7 @@ interface ServerToClientEvents {
 		message: string;
 		senderMobileNumber: string;
 		messageId: string | undefined;
+		conversationId: string;
 	}) => void;
 }
 
@@ -33,6 +34,7 @@ interface CreateMessageResponse {
 	message: string;
 	isSuccess: boolean;
 	messageId: string | undefined;
+	conversationId: string;
 }
 
 export function initSocket(httpServer: HTTPServer) {
@@ -65,6 +67,7 @@ export function initSocket(httpServer: HTTPServer) {
 						message: res.message,
 						isSuccess: res.isSuccess,
 						messageId: res.messageId?.toString(),
+						conversationId: res.conversationId!.toString(),
 					};
 
 					callback(formattedResponse);
@@ -73,6 +76,7 @@ export function initSocket(httpServer: HTTPServer) {
 						message,
 						senderMobileNumber,
 						messageId: formattedResponse.messageId,
+						conversationId: formattedResponse.conversationId,
 					});
 				});
 			},

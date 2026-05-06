@@ -1,3 +1,4 @@
+import { userStore } from '../config/store.js';
 import type { Conversation } from '../types/types.js';
 import { formatTime, getOtherParticipant } from '../utils/helpers.js';
 
@@ -33,14 +34,18 @@ function renderConversationCard(conv: Conversation) {
                 <span class="conv-item__name">${displayName}</span>
                 <span class="conv-item__time">${formatTime(conv.latestTime)}</span>
             </div>
-            <p class="conv-item__preview">${conv.latestMessage || ''}</p>
+            <p class="conv-item__preview">${conv.senderMobileNumber === userStore.user?.mobileNumber ? 'You' : displayName} : ${conv.latestMessage || ''}</p>
         </div>
     `;
 
 	convList.appendChild(listEle);
 }
 
-function updateConversationPreview(conversationId: string, message: string) {
+function updateConversationPreview(
+	conversationId: string,
+	message: string,
+	senderMobileNumber: string,
+) {
 	const convEle = convList.querySelector(`[data-conversation-id="${conversationId}"]`);
 
 	if (!convEle) return;
@@ -48,7 +53,8 @@ function updateConversationPreview(conversationId: string, message: string) {
 	const previewEle = convEle.querySelector('.conv-item__preview');
 	const timeEle = convEle.querySelector('.conv-item__time');
 
-	if (previewEle) previewEle.textContent = message;
+	if (previewEle)
+		previewEle.textContent = `${senderMobileNumber === userStore.user?.mobileNumber ? 'You' : ''} : ${message}`;
 	if (timeEle) timeEle.textContent = formatTime(new Date().toISOString());
 
 	convList.prepend(convEle);

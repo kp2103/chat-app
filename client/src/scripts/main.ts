@@ -30,8 +30,17 @@ async function initApp() {
 	userStore.conversations = await fetchConversations(userStore.user?.mobileNumber);
 	updateFilters();
 
+	userStore.conversations.forEach((conv) => {
+		joinChatRoom(conv.conversationId);
+	});
+
 	onMessageReceived(
-		(data: { message: string; senderMobileNumber: string; messageId: string }) => {
+		(data: {
+			message: string;
+			senderMobileNumber: string;
+			messageId: string;
+			conversationId: string;
+		}) => {
 			if (currentConversationId) {
 				renderMessageCard({
 					messageId: data.messageId,
@@ -40,9 +49,13 @@ async function initApp() {
 					userMobileNumber: userStore.user!.mobileNumber,
 					senderMobileNumber: data.senderMobileNumber,
 				});
-
-				updateConversationPreview(currentConversationId, data.message);
 			}
+
+			updateConversationPreview(
+				data.conversationId,
+				data.message,
+				data.senderMobileNumber,
+			);
 		},
 	);
 }
@@ -54,7 +67,12 @@ convList.addEventListener('click', async (e) => {
 	if (!convItem) return;
 
 	const convId = convItem.dataset.conversationId!;
+
+	if (convId === currentConversationId) return;
+
 	currentConversationId = convId;
+
+	msgInput.value = '';
 
 	clearChatBody();
 	chatPanel.style.display = 'flex';
@@ -67,8 +85,6 @@ convList.addEventListener('click', async (e) => {
 	convItem.classList.add('conv-item--selected');
 
 	updateChatHeader({ name, avatarUrl, type: convItem.dataset.type! });
-
-	joinChatRoom(convId);
 
 	const messages = await fetchMessages(convId);
 	messages.forEach((msg) =>
@@ -98,7 +114,11 @@ async function handleSendMessage() {
 				senderMobileNumber: userStore.user!.mobileNumber,
 			});
 
-			updateConversationPreview(currentConversationId!, content);
+			updateConversationPreview(
+				currentConversationId!,
+				content,
+				userStore.user!.mobileNumber,
+			);
 
 			msgInput.value = '';
 		}

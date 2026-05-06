@@ -1,3 +1,4 @@
+import { userStore } from '../config/store.js';
 import type { Conversation, Message } from '../types/types.js';
 import { mapParticipant } from '../utils/helpers.js';
 import { handleApiRequest } from './client.js';
@@ -14,6 +15,7 @@ async function fetchConversations(mobileNumber: string): Promise<Conversation[]>
 			latestMessage: conv.latestMessage,
 			latestTime: conv.latestTime,
 			participants: conv.participants.map(mapParticipant),
+			senderMobileNumber: conv.senderMobileNumber,
 		};
 
 		if (conv.type === 'Group') {
@@ -30,6 +32,26 @@ async function fetchConversations(mobileNumber: string): Promise<Conversation[]>
 			};
 		}
 	});
+}
+
+const chatSearch = document.getElementById('conversation-search') as HTMLInputElement;
+
+const buttonNewChat = document.getElementById('btn-new-chat') as HTMLButtonElement;
+
+buttonNewChat.addEventListener('click', (e) => createConversation(chatSearch.value));
+
+async function createConversation(mobileNumber: string): Promise<Conversation> {
+	const response = await handleApiRequest<{ conversation: any }>(`conversations`, {
+		method: 'POST',
+		body: {
+			type: 'Direct',
+			participants: [userStore.user?.mobileNumber, mobileNumber],
+		} as any,
+	});
+
+	const { conversation } = response;
+
+	return conversation;
 }
 
 async function fetchMessages(roomId: string): Promise<Message[]> {

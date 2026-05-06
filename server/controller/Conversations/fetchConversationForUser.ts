@@ -12,6 +12,7 @@ interface ConversationPreview {
 	conversationId: string;
 	latestMessage?: string;
 	latestTime?: Date;
+	senderMobileNumber?:string
 }
 
 export async function fetchConversationForUser(
@@ -67,6 +68,7 @@ export async function fetchConversationForUser(
 				if (res) {
 					doc.latestMessage = res.content.text;
 					doc.latestTime = res.createdAt;
+					doc.senderMobileNumber = res.senderMobileNumber
 				}
 
 				return doc;
